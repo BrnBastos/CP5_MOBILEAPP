@@ -59,6 +59,14 @@ Android local exige um emulador/SDK Android; iOS exige macOS/Xcode. Expo Go pode
 
 O script `scripts/configure-firebase.mjs` valida a configuração cliente e gera um módulo local antes dos comandos Expo e da tipagem. Sem configuração real, o aplicativo informa a pendência em vez de usar usuários ou bancos fictícios. `app.config.ts` aplica a configuração nativa quando os arquivos cliente existem.
 
+Para automatizar o registro dos três apps e obter seus arquivos públicos, após autenticar o CLI e criar o Realtime Database:
+
+```sh
+npm run firebase:client -- ID_REAL_DO_PROJETO
+```
+
+O comando reutiliza apps do mesmo pacote, valida projeto e identificadores e grava os três arquivos de configuração. Não cria conta de serviço, não ativa Storage nem billing. A execução contra um projeto real ainda depende da autenticação da conta e não foi comprovada. Criação dos bancos, habilitação de e-mail/senha e publicação das regras continuam necessárias.
+
 ## API e publicação
 
 ```sh
