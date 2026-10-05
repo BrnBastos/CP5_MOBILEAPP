@@ -1,5 +1,6 @@
 # Instruções do projeto
 
+- O usuário limitou esta tarefa a 15% de sua cota semanal, com reinício em 9 de outubro. Não há acesso ao saldo semanal nem conversão conhecida para tokens. Solicitar um teto numérico antes de iniciar trabalho prolongado; não inventar um orçamento nem alegar controlar a cota da conta. Evitar delegação, leituras extensas e verificações repetidas.
 - Todo o projeto deve funcionar com soluções gratuitas, sem cartão de crédito, contratação ou custos adicionais. Não habilitar planos pagos, billing, trials que exijam cartão ou serviços que possam gerar cobranças.
 - Antes de escolher infraestrutura, verificar se o plano gratuito atende ao requisito sem cartão. Quando um requisito não puder ser atendido nessas condições, documentar a limitação e informar o usuário; não declarar integração simulada como funcional.
 - Usar React Native, Expo SDK 55 ou superior e TypeScript estrito. Não usar `any` no código do projeto.
