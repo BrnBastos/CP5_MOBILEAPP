@@ -1,6 +1,7 @@
 # Instruções do projeto
 
-- Orçamento confirmado: partir dos 86% informados e preservar ao menos 71% da cota semanal até 9 de outubro. Não converter tokens em percentual nem exigir um total de tokens inexistente. Trabalhar em etapas curtas, solicitar leitura atualizada do painel entre etapas e não continuar automaticamente sem essa leitura. O agente não possui acesso ao painel. Evitar delegação, leituras extensas e verificações repetidas.
+- O usuário revogou o limite percentual e pediu continuidade sem pausas de cota. Não solicitar mais leituras do painel nem bloquear o trabalho por orçamento percentual.
+
 - Todo o projeto deve funcionar com soluções gratuitas, sem cartão de crédito, contratação ou custos adicionais. Não habilitar planos pagos, billing, trials que exijam cartão ou serviços que possam gerar cobranças.
 - Antes de escolher infraestrutura, verificar se o plano gratuito atende ao requisito sem cartão. Quando um requisito não puder ser atendido nessas condições, documentar a limitação e informar o usuário; não declarar integração simulada como funcional.
 - Usar React Native, Expo SDK 55 ou superior e TypeScript estrito. Não usar `any` no código do projeto.

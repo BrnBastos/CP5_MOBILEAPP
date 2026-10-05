@@ -1,0 +1,14 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "conversations": {
+      "$conversationId": {
+        "messages": {
+          ".read": "auth != null && data.parent().child('access').child('ready').val() == true && data.parent().child('access').child('members').child(auth.uid).val() == true",
+          ".indexOn": ["createdAt"]
+        }
+      }
+    }
+  }
+}

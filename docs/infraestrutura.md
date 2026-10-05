@@ -12,7 +12,7 @@ Restrição: nenhuma cobrança, cartão ou ativação de billing. Nenhum serviç
 
 ## API preparada localmente
 
-A API Node.js possui health check HTTP e configuração Render explicitamente `plan: free`. Ainda não foi publicada e não possui integração Firebase nesta etapa. O health check comprova apenas que o processo responde.
+A API Node.js possui autenticação Firebase, perfis, grupos, mensagens, assinatura de fotos, FCM e configuração Render explicitamente `plan: free`. A integração dos bancos foi testada em emuladores. Ainda não foi publicada nem conectada a um projeto real. O health check comprova apenas que o processo responde.
 
 ## Fontes oficiais
 
@@ -24,4 +24,4 @@ A API Node.js possui health check HTTP e configuração Render explicitamente `p
 
 ## Limite de uso do agente
 
-O usuário confirmou preservar ao menos 71% da cota semanal, partindo dos 86% informados, até 9 de outubro. O agente não consulta o painel; solicitar leitura do percentual entre etapas curtas. Não existe conversão confiável entre tokens registrados e percentual de cota. A meta permanece implementar e verificar o trabalho completo, mantendo explícitos os requisitos ainda não comprovados.
+O usuário revogou o limite percentual e pediu continuidade sem pausas de cota. A restrição de infraestrutura gratuita e sem cartão permanece.

@@ -49,3 +49,8 @@ app-example
 **/serviceAccount*.json
 **/firebaseAdminCredentials*.json
 credentials.json
+
+# Firebase CLI logs may contain authentication data
+firebase-debug*
+*-debug.log
+src/services/firebaseConfig.generated.ts

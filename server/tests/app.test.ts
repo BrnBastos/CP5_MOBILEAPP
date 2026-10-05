@@ -22,5 +22,5 @@ test('health responde via HTTP e endpoints desconhecidos são recusados', async 
   assert.equal(health.headers.get('cache-control'), 'no-store');
   assert.deepEqual(await health.json(), { status: 'ok', service: 'cp5-chat-api' });
   const missing = await fetch(`${baseUrl}/notifications/messages`, { method: 'POST' });
-  assert.equal(missing.status, 404);
+  assert.equal(missing.status, 401);
 });

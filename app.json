@@ -37,7 +37,10 @@
             "imageWidth": 76
           }
         }
-      ]
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/messaging",
+      "expo-build-properties"
     ],
     "experiments": {
       "typedRoutes": true,

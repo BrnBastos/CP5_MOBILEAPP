@@ -6,6 +6,7 @@ module.exports = defineConfig([
   {
     ignores: ['**/dist/**', '.expo/**'],
   },
+  { files: ['server/**/*.ts'], rules: { 'expo/no-env-var-destructuring': 'off' } },
   {
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
