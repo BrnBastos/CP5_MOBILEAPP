@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: cp5-chat-api
+    runtime: docker
+    plan: free
+    rootDir: server
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeployTrigger: commit

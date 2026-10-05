@@ -1,0 +1,20 @@
+{
+  "name": "cp5-chat-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/index.js",
+    "dev": "node --watch --experimental-strip-types src/index.ts",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "check": "npm run test"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "~5.9.2"
+  }
+}

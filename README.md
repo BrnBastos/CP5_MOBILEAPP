@@ -29,6 +29,7 @@ Utilize Node.js 24 LTS e npm. Se usar nvm:
 nvm install
 nvm use
 npm ci
+npm ci --prefix server
 npm start
 ```
 
@@ -92,3 +93,14 @@ Componentes, hooks, serviços, contextos, tipos e a API serão adicionados confo
 ## Integrantes
 
 Nomes completos e RMs ainda precisam ser informados e incluídos antes da entrega. Este README não é a documentação final do trabalho.
+
+## API: base da etapa 2
+
+Servidor Node.js com TypeScript, sem dependências de runtime. Para executar localmente:
+
+```sh
+npm ci --prefix server
+npm run server:dev
+```
+
+`GET http://localhost:3000/health` confirma que o processo responde. A API ainda não está publicada e não envia notificações. O arquivo `render.yaml` prepara um serviço explicitamente gratuito; o deploy dependerá da conta Render e da verificação de que o cadastro não exige cartão. As fotos usarão Cloudinary Free, cuja configuração ainda está pendente. Veja [a avaliação de infraestrutura](docs/infraestrutura.md).
