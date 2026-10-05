@@ -65,6 +65,11 @@
     "prettier": "^3.9.9",
     "typescript": "~5.9.2"
   },
+  "overrides": {
+    "@firebase/firestore": {
+      "@grpc/grpc-js": "1.13.6"
+    }
+  },
   "private": true,
   "engines": {
     "node": ">=24 <25"

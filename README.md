@@ -139,7 +139,7 @@ Esse comando inicia emuladores em um projeto `demo-cp5`, cria contas autenticada
 
 Resultado local registrado: 4 testes passaram, incluindo a integração. Nenhum teste em aparelho físico, upload real ou recebimento FCM foi comprovado até o momento.
 
-A auditoria npm identificou avisos em dependências transitivas do ecossistema Expo/Firebase. Algumas propostas automáticas exigem versões incompatíveis; não foi aplicado `audit fix --force`. A revisão dessas dependências continua pendente antes da entrega final.
+A revisão de dependências atualizou o gRPC utilizado pelo SDK Firebase para a versão corrigida 1.13.6. Permanecem avisos transitivos do ecossistema Expo, incluindo dependências sem correção publicada. Não foi aplicado `audit fix --force`, pois suas propostas incluem mudanças incompatíveis. [Revisão e limitações](docs/seguranca-dependencias.md).
 
 ## Estrutura
 
