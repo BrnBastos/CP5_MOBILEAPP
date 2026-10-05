@@ -51,6 +51,8 @@ npx expo-doctor
 
 `check` executa TypeScript, lint e verificação de formatação. O GitHub Actions executa o mesmo comando em pushes para `main` e pull requests.
 
+Validação da base: `npm run check` passou, Expo Doctor passou em 20/20 verificações e `npx expo export --platform all` gerou os bundles Android, iOS e web. A exportação verifica a compilação JavaScript; ainda não houve build nativo nem teste em aparelho físico.
+
 ```sh
 npm run format
 ```
