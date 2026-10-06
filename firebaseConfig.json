@@ -1,0 +1,9 @@
+{
+  "apiKey": "AIzaSyCqG-cUikdpp5q6xJYPYj1yi5aTXXOlONQ",
+  "authDomain": "cp5-mobileapp.firebaseapp.com",
+  "databaseURL": "https://cp5-mobileapp-default-rtdb.firebaseio.com",
+  "projectId": "cp5-mobileapp",
+  "storageBucket": "cp5-mobileapp.firebasestorage.app",
+  "messagingSenderId": "525787696849",
+  "appId": "1:525787696849:web:d671f0ba1a6487e869bff0"
+}

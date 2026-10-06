@@ -1,0 +1,300 @@
+{
+  "api": "https://cp5-chat-api-mhx2.onrender.com",
+  "project": "cp5-mobileapp",
+  "startedAt": "2026-10-06T01:11:47.518Z",
+  "checks": [
+    {
+      "name": "Firebase Authentication cria conta por senha 1",
+      "passed": true
+    },
+    {
+      "name": "Firebase Authentication cria conta por senha 2",
+      "passed": true
+    },
+    {
+      "name": "Firebase Authentication cria conta por senha 3",
+      "passed": true
+    },
+    {
+      "name": "Firebase Authentication cria conta por senha 4",
+      "passed": true
+    },
+    {
+      "name": "Firebase Authentication cria conta por senha 5",
+      "passed": true
+    },
+    {
+      "name": "Login com senha incorreta é recusado",
+      "passed": true
+    },
+    {
+      "name": "Perfil autenticado persiste no Firestore 1",
+      "passed": true
+    },
+    {
+      "name": "Perfil autenticado persiste no Firestore 2",
+      "passed": true
+    },
+    {
+      "name": "Perfil autenticado persiste no Firestore 3",
+      "passed": true
+    },
+    {
+      "name": "Perfil autenticado persiste no Firestore 4",
+      "passed": true
+    },
+    {
+      "name": "Perfil autenticado persiste no Firestore 5",
+      "passed": true
+    },
+    {
+      "name": "Conversa consigo mesmo é recusada",
+      "passed": true
+    },
+    {
+      "name": "Criação de grupo com proprietário e dois integrantes",
+      "passed": true
+    },
+    {
+      "name": "Não proprietário não altera integrantes",
+      "passed": true
+    },
+    {
+      "name": "Adições concorrentes respeitam última vaga",
+      "passed": true
+    },
+    {
+      "name": "Integrante lê metadados do grupo pelas regras publicadas",
+      "passed": true
+    },
+    {
+      "name": "Grupo tem exatamente três integrantes após concorrência",
+      "passed": true
+    },
+    {
+      "name": "Limite abaixo da ocupação é recusado",
+      "passed": true
+    },
+    {
+      "name": "Externo não lê perfil completo pela API",
+      "passed": true
+    },
+    {
+      "name": "Participante em comum lê perfil pela API",
+      "passed": true
+    },
+    {
+      "name": "Firestore impede leitura direta do perfil de outro usuário",
+      "passed": true
+    },
+    {
+      "name": "Diretório expõe somente UID, nome e foto",
+      "passed": true
+    },
+    {
+      "name": "Firestore impede leitura de tokens de outro usuário",
+      "passed": true
+    },
+    {
+      "name": "Conversa individual não duplica em chamadas concorrentes",
+      "passed": true
+    },
+    {
+      "name": "Externo não envia mensagem ao grupo",
+      "passed": true
+    },
+    {
+      "name": "Mensagem persiste com remetente autenticado, ignorando falsificação",
+      "passed": true
+    },
+    {
+      "name": "Reenvio da mesma mensagem é idempotente",
+      "passed": true
+    },
+    {
+      "name": "Reutilizar ID com outro texto é recusado",
+      "passed": true
+    },
+    {
+      "name": "Integrante lê mensagem realmente persistida no RTDB",
+      "passed": true
+    },
+    {
+      "name": "Externo não lê mensagens no RTDB",
+      "passed": true
+    },
+    {
+      "name": "Anônimo não lê mensagens no RTDB",
+      "passed": true
+    },
+    {
+      "name": "Cliente não consegue escrever mensagem diretamente no RTDB",
+      "passed": true
+    },
+    {
+      "name": "Mensagem não pode selecionar destinatário externo",
+      "passed": true
+    },
+    {
+      "name": "Mensagem direcionada a integrante é aceita",
+      "passed": true
+    },
+    {
+      "name": "Mensagem direcionada permanece no histórico coletivo",
+      "passed": true
+    },
+    {
+      "name": "Usuário não solicita push de mensagem de outro remetente",
+      "passed": true
+    },
+    {
+      "name": "Solicitações concorrentes de push não duplicam o job",
+      "passed": true
+    },
+    {
+      "name": "Política disabled registra zero envios",
+      "passed": true
+    },
+    {
+      "name": "Proprietário pode configurar política all_group_messages",
+      "passed": true
+    },
+    {
+      "name": "Proprietário pode configurar política mentioned_members",
+      "passed": true
+    },
+    {
+      "name": "Proprietário pode configurar política direct_messages_only",
+      "passed": true
+    },
+    {
+      "name": "Proprietário pode configurar política disabled",
+      "passed": true
+    },
+    {
+      "name": "API configura assinatura Cloudinary sem expor o segredo",
+      "passed": true
+    },
+    {
+      "name": "Não proprietário não recebe assinatura para foto do grupo",
+      "passed": true
+    },
+    {
+      "name": "Proprietário remove integrante",
+      "passed": true
+    },
+    {
+      "name": "Removido perde leitura das mensagens no RTDB",
+      "passed": true
+    },
+    {
+      "name": "Removido perde leitura dos metadados no Firestore",
+      "passed": true
+    },
+    {
+      "name": "Removido não envia novas mensagens",
+      "passed": true
+    },
+    {
+      "name": "Removido não solicita novos envios de push",
+      "passed": true
+    }
+  ],
+  "cleanup": [
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "firestore",
+      "success": true
+    },
+    {
+      "type": "database",
+      "success": true
+    },
+    {
+      "type": "database",
+      "success": true
+    },
+    {
+      "type": "auth",
+      "success": true
+    },
+    {
+      "type": "auth",
+      "success": true
+    },
+    {
+      "type": "auth",
+      "success": true
+    },
+    {
+      "type": "auth",
+      "success": true
+    },
+    {
+      "type": "auth",
+      "success": true
+    }
+  ],
+  "completedAt": "2026-10-06T01:12:44.585Z",
+  "notVerified": [
+    "Recebimento FCM em Android/iOS",
+    "Abertura da conversa ao tocar em push real",
+    "Seleção/permissões da galeria e fluxo de fotos na interface",
+    "Interface em aparelhos",
+    "Retomada Render após inatividade",
+    "Sessão e logout na interface"
+  ],
+  "photoStorage": {
+    "realUploadVerified": true,
+    "cleanupVerified": true,
+    "imageDownloadVerified": true,
+    "authCleanupVerified": true
+  }
+}

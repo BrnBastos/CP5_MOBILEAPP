@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "525787696849",
+    "firebase_url": "https://cp5-mobileapp-default-rtdb.firebaseio.com",
+    "project_id": "cp5-mobileapp",
+    "storage_bucket": "cp5-mobileapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525787696849:android:d4da24bcce97749a69bff0",
+        "android_client_info": {
+          "package_name": "com.brnbastos.cp5mobileapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVYWdtNaLwnnoox35h3cbUurPuV3aXtZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

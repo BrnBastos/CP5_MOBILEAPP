@@ -13,15 +13,19 @@ export async function api<T>(
   if (!user) throw new Error('Faça login para continuar.');
   const token = await user.getIdToken();
   let response: Response;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 90000);
   try {
     response = await fetch(`${url.replace(/\/$/, '')}${path}`, {
       method,
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-      signal: AbortSignal.timeout(90000),
+      signal: controller.signal,
     });
   } catch {
     throw new Error('Sem conexão com a API. Tente novamente em instantes.');
+  } finally {
+    clearTimeout(timeout);
   }
   const raw: unknown = await response.json();
   if (!response.ok) {

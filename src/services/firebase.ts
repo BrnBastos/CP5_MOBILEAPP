@@ -4,7 +4,7 @@ import { getAuth, initializeAuth } from 'firebase/auth';
 import * as authModule from 'firebase/auth';
 import type { Persistence } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, initializeFirestore } from 'firebase/firestore';
 import { Platform } from 'react-native';
 import { firebaseClientConfig } from './firebaseConfig.generated';
 
@@ -21,5 +21,9 @@ export function firebase() {
     exists || Platform.OS === 'web'
       ? getAuth(app)
       : initializeAuth(app, { persistence: nativeAuth.getReactNativePersistence(AsyncStorage) });
-  return { auth, db: getFirestore(app), realtime: getDatabase(app) };
+  const db =
+    Platform.OS === 'web'
+      ? getFirestore(app)
+      : initializeFirestore(app, { experimentalForceLongPolling: true });
+  return { auth, db, realtime: getDatabase(app) };
 }

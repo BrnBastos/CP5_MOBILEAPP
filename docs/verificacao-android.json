@@ -1,0 +1,159 @@
+{
+  "api": "https://cp5-chat-api-mhx2.onrender.com",
+  "project": "cp5-mobileapp",
+  "platform": "Android 16, emulador Google Play arm64-v8a",
+  "completedAt": "2026-10-06T01:37:43.232Z",
+  "build": {
+    "variant": "debug development client",
+    "successful": true,
+    "apkInstalled": true
+  },
+  "evidence": {
+    "login": true,
+    "sessionRestored": true,
+    "realtimeHistory": true,
+    "realFcmTokenRegistered": true,
+    "foregroundPushDisplayed": true,
+    "foregroundTapOpenedGroup": true,
+    "backgroundNotificationsDisplayed": true,
+    "logout": true
+  },
+  "checks": [
+    {
+      "name": "remetente com token não recebe próprio push",
+      "passed": true,
+      "fcmAccepted": 0
+    },
+    {
+      "name": "menções sem destinatário não notificam",
+      "passed": true,
+      "fcmAccepted": 0
+    },
+    {
+      "name": "menção direcionada notifica integrante",
+      "passed": true,
+      "fcmAccepted": 1
+    },
+    {
+      "name": "política individual não notifica grupo",
+      "passed": true,
+      "fcmAccepted": 0
+    },
+    {
+      "name": "conversa individual notifica",
+      "passed": true,
+      "fcmAccepted": 1
+    },
+    {
+      "name": "política desativada não envia",
+      "passed": true,
+      "fcmAccepted": 0
+    },
+    {
+      "name": "integrante removido mantém token, mas não recebe envio do grupo",
+      "passed": true,
+      "fcmAccepted": 0
+    }
+  ],
+  "cleanup": [
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "database:remove",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "database:remove",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "firestore:delete",
+      "success": true
+    },
+    {
+      "type": "auth",
+      "success": true
+    },
+    {
+      "type": "auth",
+      "success": true
+    },
+    {
+      "type": "auth",
+      "success": true
+    }
+  ],
+  "notVerified": [
+    "Push/execução iOS: equipe sem Apple Developer/APNs",
+    "Recebimento/abertura com processo encerrado em APK com bundle embutido",
+    "Galeria e cadastro completo pela interface",
+    "Todos os fluxos visuais e dois clientes nativos simultâneos"
+  ],
+  "observedFailure": "No development client, o teste com processo encerrado apresentou Unable to load script. Não comprova cold start de APK standalone."
+}
