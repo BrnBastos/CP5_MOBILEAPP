@@ -8,7 +8,18 @@ import { directorySchema, groupSchema, policyLabels, type Policy } from '@/types
 import { api, idResponse } from '@/services/api';
 import { firebase } from '@/services/firebase';
 import { pickPhoto, uploadPhoto } from '@/services/photos';
-import { Avatar, Button, ErrorText, Field, Label, Loading, Row, Screen } from '@/components/ui';
+import {
+  Avatar,
+  Button,
+  Card,
+  ErrorText,
+  Field,
+  Label,
+  Loading,
+  Row,
+  Screen,
+  SectionTitle,
+} from '@/components/ui';
 import { errorMessage } from '@/utils/errors';
 export default function GroupForm() {
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -87,7 +98,12 @@ export default function GroupForm() {
     }
   };
   return (
-    <Screen title={id ? 'Configurações do grupo' : 'Novo grupo'}>
+    <Screen
+      hasNavigationHeader
+      title={id ? 'Do jeito da sua turma.' : 'Juntos, fica melhor.'}
+      eyebrow={id ? 'AJUSTES DO GRUPO' : 'NOVO GRUPO'}
+      subtitle="Escolha um nome, uma foto e quem faz parte dessa conversa."
+    >
       <ErrorText message={error || directory.error} />
       {loading ? (
         <Loading />
@@ -95,43 +111,73 @@ export default function GroupForm() {
         <Label>Somente o proprietário pode editar este grupo.</Label>
       ) : (
         <>
-          <Field label="Nome do grupo" value={name} onChangeText={setName} />
-          <Avatar name={name} url={photo?.uri ?? photoUrl} size={80} />
-          <Button
-            title="Escolher foto do grupo"
-            disabled={busy}
-            onPress={() => {
-              void pickPhoto()
-                .then(setPhoto)
-                .catch((failure: unknown) => setError(errorMessage(failure)));
-            }}
-          />
-          <Field
-            label="Limite de integrantes (2 a 100)"
-            value={limit}
-            onChangeText={setLimit}
-            keyboardType="number-pad"
-          />
-          <Label>
-            {members.length} integrantes · {validCapacity ? capacity - members.length : 0} vagas
-          </Label>
-          {!validCapacity ? (
-            <ErrorText message="O limite deve ser inteiro e comportar os integrantes atuais." />
-          ) : null}
-          <Label>Política de notificações</Label>
-          {(Object.keys(policyLabels) as Policy[]).map((item) => (
-            <Button
-              key={item}
-              title={`${policy === item ? '✓ ' : ''}${policyLabels[item]}`}
-              disabled={busy}
-              onPress={() => setPolicy(item)}
+          <Card>
+            <SectionTitle title="A cara do grupo" />
+            <Field
+              label="Nome do grupo"
+              placeholder="Como a turma se chama?"
+              value={name}
+              onChangeText={setName}
             />
-          ))}
-          <Field label="Buscar integrantes" value={search} onChangeText={setSearch} />
+            <Avatar name={name} url={photo?.uri ?? photoUrl} size={80} />
+            <Button
+              title="Escolher foto do grupo"
+              variant="secondary"
+              disabled={busy}
+              onPress={() => {
+                void pickPhoto()
+                  .then(setPhoto)
+                  .catch((failure: unknown) => setError(errorMessage(failure)));
+              }}
+            />
+          </Card>
+          <Card>
+            <SectionTitle title="Espaço para a turma" />
+            <Field
+              label="Limite de integrantes (2 a 100)"
+              value={limit}
+              onChangeText={setLimit}
+              keyboardType="number-pad"
+            />
+            <Label>
+              {members.length} integrantes · {validCapacity ? capacity - members.length : 0} vagas
+            </Label>
+            {!validCapacity ? (
+              <ErrorText message="O limite deve ser inteiro e comportar os integrantes atuais." />
+            ) : null}
+          </Card>
+          <Card>
+            <SectionTitle title="Quando avisar?" />
+            <Label muted>Escolha quais mensagens geram notificações neste grupo.</Label>
+            {(Object.keys(policyLabels) as Policy[]).map((item) => (
+              <Button
+                key={item}
+                title={`${policy === item ? '✓  ' : ''}${policyLabels[item]}`}
+                variant={policy === item ? 'primary' : 'secondary'}
+                disabled={busy}
+                onPress={() => setPolicy(item)}
+              />
+            ))}
+          </Card>
+          <SectionTitle title="Quem vem junto?" detail={`${members.length} selecionados`} />
+          <Field
+            label="Buscar pessoas"
+            placeholder="Digite um nome"
+            value={search}
+            onChangeText={setSearch}
+          />
           {people.map((person) => (
             <Row
               key={person.uid}
-              title={`${members.includes(person.uid) ? '✓ ' : ''}${person.name}${person.uid === user?.uid ? ' (proprietário)' : ''}`}
+              title={person.name}
+              selected={members.includes(person.uid)}
+              subtitle={
+                person.uid === user?.uid
+                  ? 'Você · proprietário do grupo'
+                  : members.includes(person.uid)
+                    ? 'Faz parte do grupo'
+                    : 'Toque para adicionar'
+              }
               photoUrl={person.photoUrl}
               onPress={() => {
                 if (!busy) toggle(person.uid);
@@ -139,7 +185,7 @@ export default function GroupForm() {
             />
           ))}
           <Button
-            title={busy ? 'Salvando…' : 'Salvar grupo'}
+            title={busy ? 'Salvando…' : id ? 'Salvar alterações' : 'Criar nosso grupo'}
             disabled={busy || !validCapacity || members.length < 2 || name.trim().length < 2}
             onPress={() => void save()}
           />

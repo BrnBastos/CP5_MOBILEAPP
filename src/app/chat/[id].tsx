@@ -29,7 +29,18 @@ import {
   type Group,
   type Message,
 } from '@/types/models';
-import { Avatar, Button, ErrorText, Field, Label, Loading, colors } from '@/components/ui';
+import {
+  Avatar,
+  Button,
+  EmptyState,
+  ErrorText,
+  Field,
+  Label,
+  Loading,
+  Row,
+  colors,
+} from '@/components/ui';
+import { softShadow } from '@/theme/theme';
 import { errorMessage } from '@/utils/errors';
 export default function Chat() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -115,7 +126,7 @@ export default function Chat() {
     }
   }, [text, busy, metadata, target, id]);
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -134,8 +145,12 @@ export default function Chat() {
             <Avatar name={title} url={group?.photoUrl ?? other?.photoUrl} />
           </Pressable>
           <View style={{ flex: 1 }}>
-            <Label>{title}</Label>
-            {group ? <Label>{policyLabels[group.notificationPolicy]}</Label> : null}
+            <Text style={styles.chatTitle}>{title}</Text>
+            {group ? (
+              <Label muted style={{ fontSize: 12 }}>
+                {policyLabels[group.notificationPolicy]}
+              </Label>
+            ) : null}
           </View>
         </View>
         <ErrorText message={error || chat.error || directory.error} />
@@ -147,15 +162,18 @@ export default function Chat() {
             keyboardShouldPersistTaps="handled"
           >
             {members.map((member) => (
-              <Button
+              <Row
                 key={member}
-                title={`${people.get(member)?.name ?? member}${member === group.ownerId ? ' · proprietário' : ''}`}
+                title={people.get(member)?.name ?? 'Integrante'}
+                photoUrl={people.get(member)?.photoUrl}
+                subtitle={member === group.ownerId ? 'Proprietário do grupo' : 'Ver perfil'}
                 onPress={() => router.push({ pathname: '/profile/[uid]', params: { uid: member } })}
               />
             ))}
             {group.ownerId === user?.uid ? (
               <Button
-                title="Editar grupo"
+                title="Ajustar este grupo"
+                variant="secondary"
                 onPress={() => router.push({ pathname: '/group', params: { id } })}
               />
             ) : null}
@@ -166,17 +184,26 @@ export default function Chat() {
           ref={list}
           data={chat.messages}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ padding: 16, gap: 12, flexGrow: 1 }}
+          contentContainerStyle={{ padding: 20, gap: 14, flexGrow: 1 }}
           onContentSizeChange={() => list.current?.scrollToEnd({ animated: true })}
           ListEmptyComponent={
-            !chat.loading ? <Label>Esta conversa ainda não tem mensagens.</Label> : null
+            !chat.loading ? (
+              <EmptyState
+                title="O primeiro oi é seu"
+                description="Envie uma mensagem para começar essa conversa."
+              />
+            ) : null
           }
           renderItem={({ item }) => (
             <View
               style={[styles.bubble, item.senderId === user?.uid ? styles.sent : styles.received]}
             >
               {group ? (
-                <Text style={styles.author}>{people.get(item.senderId)?.name ?? 'Integrante'}</Text>
+                <Text style={styles.author}>
+                  {item.senderId === user?.uid
+                    ? 'Você'
+                    : (people.get(item.senderId)?.name ?? 'Integrante')}
+                </Text>
               ) : null}
               <Text style={styles.message}>{item.text}</Text>
               {item.target.type === 'member' ? (
@@ -194,12 +221,13 @@ export default function Chat() {
           )}
         />
         {group ? (
-          <View style={{ paddingHorizontal: 14 }}>
+          <View style={{ paddingHorizontal: 20, paddingTop: 8 }}>
             <Button
+              variant="secondary"
               title={
                 target
                   ? `Para: ${people.get(target)?.name ?? 'integrante'} · alterar`
-                  : 'Selecionar destinatário (opcional)'
+                  : 'Mensagem para todo o grupo'
               }
               disabled={busy}
               onPress={() => setShowTargets((value) => !value)}
@@ -211,7 +239,8 @@ export default function Chat() {
                 keyboardShouldPersistTaps="handled"
               >
                 <Button
-                  title="Todo o grupo"
+                  title="Enviar para todo o grupo"
+                  variant="secondary"
                   onPress={() => {
                     setTarget('');
                     setShowTargets(false);
@@ -223,6 +252,7 @@ export default function Chat() {
                     <Button
                       key={member}
                       title={people.get(member)?.name ?? 'Integrante'}
+                      variant="secondary"
                       onPress={() => {
                         setTarget(member);
                         setShowTargets(false);
@@ -234,15 +264,20 @@ export default function Chat() {
           </View>
         ) : null}
         <View style={styles.composer}>
-          <Field
-            label="Mensagem"
-            value={text}
-            onChangeText={setText}
-            editable={!busy && Boolean(metadata)}
-            multiline
-            maxLength={4000}
-          />
+          <View style={{ flex: 1 }}>
+            <Field
+              label="Sua mensagem"
+              placeholder="Escreva algo…"
+              style={{ minHeight: 54, maxHeight: 130, textAlignVertical: 'top' }}
+              value={text}
+              onChangeText={setText}
+              editable={!busy && Boolean(metadata)}
+              multiline
+              maxLength={4000}
+            />
+          </View>
           <Button
+            style={{ minWidth: 86 }}
             title={busy ? 'Enviando…' : 'Enviar'}
             disabled={
               busy || !text.trim() || !metadata || metadata.state !== 'ready' || Boolean(chat.error)
@@ -256,13 +291,43 @@ export default function Chat() {
 }
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
-  header: { flexDirection: 'row', gap: 14, padding: 16, alignItems: 'center' },
-  bubble: { maxWidth: '85%', padding: 14, borderRadius: 14, gap: 5 },
-  sent: { backgroundColor: '#155e75', alignSelf: 'flex-end' },
-  received: { backgroundColor: colors.card, alignSelf: 'flex-start' },
-  author: { color: colors.accent, fontWeight: '700' },
-  message: { color: colors.text, fontSize: 16 },
-  details: { color: colors.muted, fontSize: 12 },
-  composer: { padding: 14, gap: 12 },
+  header: {
+    flexDirection: 'row',
+    gap: 14,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  chatTitle: {
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: '700',
+    letterSpacing: -0.3,
+    marginBottom: 3,
+  },
+  bubble: {
+    maxWidth: '85%',
+    padding: 16,
+    borderRadius: 22,
+    gap: 6,
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
+    boxShadow: softShadow,
+  },
+  sent: { backgroundColor: colors.greenSoft, alignSelf: 'flex-end', borderBottomRightRadius: 6 },
+  received: { backgroundColor: colors.card, alignSelf: 'flex-start', borderBottomLeftRadius: 6 },
+  author: { color: colors.blue, fontWeight: '600', fontSize: 12 },
+  message: { color: colors.text, fontSize: 16, lineHeight: 24 },
+  details: { color: colors.muted, fontSize: 11, alignSelf: 'flex-end', marginTop: 3 },
+  composer: {
+    padding: 20,
+    gap: 12,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
   members: { padding: 14, gap: 8 },
 });

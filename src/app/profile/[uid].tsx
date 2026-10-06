@@ -2,7 +2,16 @@ import { useEffect, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import { api } from '@/services/api';
 import { userSchema, type ChatUser } from '@/types/models';
-import { Avatar, ErrorText, Label, Loading, Screen } from '@/components/ui';
+import {
+  Avatar,
+  Card,
+  ErrorText,
+  Label,
+  Loading,
+  ProfileDetail,
+  Screen,
+  SectionTitle,
+} from '@/components/ui';
 import { errorMessage } from '@/utils/errors';
 export default function Profile() {
   const { uid } = useLocalSearchParams<{ uid: string }>();
@@ -29,16 +38,31 @@ export default function Profile() {
     };
   }, [uid]);
   return (
-    <Screen title="Perfil">
+    <Screen
+      hasNavigationHeader
+      title="Cada pessoa, uma história."
+      eyebrow="PERFIL"
+      subtitle="Conheça quem está do outro lado da conversa."
+    >
       <ErrorText message={error} />
       {loading ? <Loading /> : null}
       {profile ? (
         <>
-          <Avatar url={profile.photoUrl} name={profile.name} size={100} />
-          <Label>{profile.name || 'Nome indisponível'}</Label>
-          <Label>E-mail: {profile.email || 'Indisponível'}</Label>
-          <Label>Celular: {profile.phoneNumber || 'Indisponível'}</Label>
-          <Label>Nascimento: {profile.birthDate || 'Indisponível'}</Label>
+          <Card style={{ alignItems: 'center', paddingVertical: 30 }}>
+            <Avatar url={profile.photoUrl} name={profile.name} size={100} />
+            <Label style={{ fontSize: 23, fontWeight: '700', textAlign: 'center' }}>
+              {profile.name || 'Nome indisponível'}
+            </Label>
+          </Card>
+          <Card>
+            <SectionTitle title="Informações do perfil" />
+            <ProfileDetail label="E-mail" value={profile.email || 'Não informado'} />
+            <ProfileDetail label="Celular" value={profile.phoneNumber || 'Não informado'} />
+            <ProfileDetail
+              label="Data de nascimento"
+              value={profile.birthDate || 'Não informada'}
+            />
+          </Card>
         </>
       ) : null}
     </Screen>

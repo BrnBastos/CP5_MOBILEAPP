@@ -1,8 +1,14 @@
 # CP5 Chat — FIAP Mobile Development
 
-Aplicativo React Native de conversas individuais e em grupo com API própria e integração Firebase.
+Aplicativo React Native de conversas individuais e em grupo com API própria e integração Firebase. Na interface, o aplicativo se chama **Nivo**.
 
 [Enunciado](https://github.com/anderltda/doc-react-native/blob/main/CPS/3ESPX/Segundo%20Semestre/README_TRABALHO_REACT_NATIVE_CHAT_FIREBASE_GRUPOS_PUSH.md) · [Repositório](https://github.com/BrnBastos/CP5_MOBILEAPP)
+
+## Interface Nivo
+
+A interface utiliza Soft UI / Neumorphism com fundo branco, superfícies claras, sombras suaves, campos com profundidade e detalhes em verde e azul. Login, cadastro, lista de conversas, pessoas, grupos, mensagens e perfil compartilham os componentes de `src/components/ui.tsx` e o tema de `src/theme/theme.ts`. Os textos e a hierarquia das ações foram revisados. Nivo é a marca apresentada nas telas; os identificadores nativos e a configuração das integrações são mantidos.
+
+Validação desta revisão: `npm run check` e exportação Android/iOS/web passaram. Login e início do cadastro foram inspecionados no simulador iPhone Air (iOS 26.4): [login Nivo](docs/evidencias/nivo-ios-login.png) e [cadastro Nivo](docs/evidencias/nivo-ios-cadastro.png). As capturas incluem o botão Tools do development build. Esta revisão visual não representa uma nova validação completa dos fluxos autenticados.
 
 ## Estado da entrega
 

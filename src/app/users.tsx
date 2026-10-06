@@ -4,7 +4,16 @@ import { directorySchema } from '@/types/models';
 import { useCollection } from '@/hooks/useCollection';
 import { useAuth } from '@/contexts/AuthContext';
 import { api, idResponse } from '@/services/api';
-import { ErrorText, Field, Label, Loading, Row, Screen } from '@/components/ui';
+import {
+  Card,
+  EmptyState,
+  ErrorText,
+  Field,
+  Loading,
+  Row,
+  Screen,
+  SectionTitle,
+} from '@/components/ui';
 import { errorMessage } from '@/utils/errors';
 export default function Users() {
   const { user } = useAuth();
@@ -35,15 +44,34 @@ export default function Users() {
     }
   };
   return (
-    <Screen title="Encontre uma pessoa">
-      <Field label="Buscar por nome" value={search} onChangeText={setSearch} />
+    <Screen
+      hasNavigationHeader
+      title="Uma boa conversa começa aqui."
+      eyebrow="SUA TURMA"
+      subtitle="Encontre alguém pelo nome e envie a primeira mensagem."
+    >
+      <Card>
+        <Field
+          label="Quem você procura?"
+          placeholder="Buscar pelo nome"
+          value={search}
+          onChangeText={setSearch}
+        />
+      </Card>
+      <SectionTitle title="Pessoas" detail={`${filtered.length} encontradas`} />
       <ErrorText message={error || directory.error} />
       {directory.loading || busy ? <Loading /> : null}
-      {!directory.loading && !filtered.length ? <Label>Nenhuma pessoa encontrada.</Label> : null}
+      {!directory.loading && !filtered.length ? (
+        <EmptyState
+          title="Ainda não encontramos ninguém"
+          description="Tente outro nome ou convide sua turma para criar uma conta."
+        />
+      ) : null}
       {filtered.map((person) => (
         <Row
           key={person.uid}
           title={person.name}
+          subtitle="Toque para iniciar uma conversa"
           photoUrl={person.photoUrl}
           onPress={() => void start(person.uid)}
         />
