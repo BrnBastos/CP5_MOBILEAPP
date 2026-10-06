@@ -36,7 +36,7 @@ npm ci --prefix server
 npm start
 ```
 
-Criar um `.env` local a partir de `.env.example`, que já contém a URL pública da API. Esse arquivo não deve ser versionado. Os comandos Android/iOS geram e executam builds nativos locais; exigem os SDKs correspondentes.
+Criar um `.env` local a partir de `.env.example` e definir `EXPO_PUBLIC_API_URL=https://cp5-chat-api-mhx2.onrender.com`. Esse arquivo não deve ser versionado. Os comandos Android/iOS geram e executam builds nativos locais; exigem os SDKs correspondentes.
 
 ```sh
 npm run android
@@ -77,7 +77,7 @@ npm --prefix server start
 
 A API ouve `PORT` (padrão 3000). Seus segredos e nomes de variáveis estão documentados em `server/.env.example`. O serviço de produção deve receber esses valores como variáveis secretas da hospedagem.
 
-`server/Dockerfile` produz uma imagem Node.js. `render.yaml` declara explicitamente `plan: free` e health check `/health`. A URL publicada é **https://cp5-chat-api-mhx2.onrender.com** e está em `.env.example`. [Health check](https://cp5-chat-api-mhx2.onrender.com/health) e [verificação do Firestore](https://cp5-chat-api-mhx2.onrender.com/ready) retornaram HTTP 200. A retomada após inatividade ainda não foi verificada.
+`server/Dockerfile` produz uma imagem Node.js. `render.yaml` declara explicitamente `plan: free` e health check `/health`. A URL publicada é **https://cp5-chat-api-mhx2.onrender.com** e deve ser usada em `EXPO_PUBLIC_API_URL` no `.env` local. `.env.example` contém um endereço fictício conforme o enunciado. [Health check](https://cp5-chat-api-mhx2.onrender.com/health) e [verificação do Firestore](https://cp5-chat-api-mhx2.onrender.com/ready) retornaram HTTP 200. A retomada após inatividade ainda não foi verificada.
 
 | Endpoint                                   | Função                                                                |
 | ------------------------------------------ | --------------------------------------------------------------------- |
