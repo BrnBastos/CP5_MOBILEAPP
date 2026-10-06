@@ -18,6 +18,12 @@ API auditada: https://cp5-chat-api-mhx2.onrender.com. Projeto Firebase: `cp5-mob
 - Notificações Android em background foram vistas no sistema. No teste com processo encerrado, o development client falhou com `Unable to load script`; cold start deve ser refeito com APK que embuta o bundle. Não foi declarado aprovado.
 - Prints reais e relatório sanitizado Android estão em `docs/evidencias/` e `verificacao-android.json`. As identidades de auditoria são contas reais temporárias, não integrantes inventados.
 
+## Correção e execução iOS — 5 de outubro de 2026
+
+`npm run ios` falhava em `pod install` com `[react-native-firebase] SPM + static linkage is not supported`. O plugin `@react-native-firebase/app` passou a usar `ios.disableSPM: true`, instalando Firebase por CocoaPods com a ligação estática já configurada. O prebuild aplicou a flag no Podfile gerado e os locks dos Pods ficaram sincronizados.
+
+O build Debug para o simulador iPhone Air (iOS 26.4) terminou com zero erros. O app foi instalado, conectou ao Metro e exibiu a tela real de login. [Print iOS](evidencias/ios-login.png). `npm run check` e Expo Doctor (20/20) passaram. Isso não comprova os fluxos completos nem recebimento de push iOS; APNs continua pendente.
+
 ## Correções encontradas na execução Android
 
 - A restauração identificava a conta, mas o listener do perfil não respondia de forma confiável. O Firestore passou a usar `experimentalForceLongPolling` nos clientes nativos, mantendo o transporte padrão no web. Referência: [FirestoreSettings](https://firebase.google.com/docs/reference/js/firestore.firestoresettings).
@@ -25,22 +31,22 @@ API auditada: https://cp5-chat-api-mhx2.onrender.com. Projeto Firebase: `cp5-mob
 
 ## Comparação com o enunciado
 
-| Requisito                                    | Evidência atual                                                                                   | Trabalho restante                                                               |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Expo 55+, TypeScript, hooks e módulos        | Manifestos, tipagem/lint aprovados, hooks com estado/listeners; sem `any` no código próprio       | Validar comportamento visual dos hooks e estados no app                         |
-| Cadastro/login por senha e perfis            | Senha incorreta recusada; perfis protegidos; login, restauração e logout Android aprovados        | Cadastro com foto e demais campos pela interface                                |
-| Conversa individual única para dois usuários | Criação simultânea retornou o mesmo ID; conversa consigo mesmo recusada                           | Fluxo visual e navegação ao perfil                                              |
-| Grupos, proprietário, capacidade e políticas | Concorrência respeitou última vaga; não proprietário e redução abaixo da ocupação recusados       | Criação/edição e indicadores pela interface                                     |
-| Mensagens no RTDB e direcionamento           | Persistência protegida; histórico coletivo; listener Android mostrou mensagens reais              | Dois clientes simultâneos, rolagem e todos os estados visuais                   |
-| Revogação de integrantes                     | Removido sem leitura/envio/push; grupo desapareceu da lista Android                               | Confirmar limpeza da interface ao remover usuário com chat aberto               |
-| Fotos em armazenamento e URLs no Firestore   | Upload Cloudinary real; implementação grava URLs; nenhuma imagem Base64 nos bancos                | Galeria, permissões e alteração das fotos pela interface                        |
-| API própria pública HTTPS                    | Health, Firestore e rotas autenticadas testados                                                   | Retomada do serviço Free após inatividade                                       |
-| Destinatários e deduplicação de push         | FCM real Android; quantidades das quatro políticas, deduplicação, remetente e removido conferidos | Ampliar evidências de recebimento por política e diferentes clientes            |
-| Android e iOS                                | Android compilado/instalado; sessão, histórico e FCM reais; iOS apenas exportado                  | Cold start standalone e fluxos completos Android; build, execução e APNs no iOS |
-| Toque na notificação abre conversa           | Toque em foreground Android abriu o grupo e mostrou histórico real                                | Navegação em background e APK com processo encerrado                            |
-| Segurança dos bancos e segredos              | Regras publicadas e acessos negados em produção; configurações cliente públicas versionadas       | Manter segredos somente na hospedagem; revisar avisos transitivos documentados  |
-| README, URL, prints e evidência de push      | URL e configuração reais, instruções, prints e recebimento Android documentados                   | Demais prints dos fluxos e evidência iOS                                        |
-| Integrantes e entrega                        | Repositório público e cinco nomes/RMs registrados no README                                       | Realizar entrega pelo Teams após concluir pendências                            |
+| Requisito                                    | Evidência atual                                                                                   | Trabalho restante                                                                |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Expo 55+, TypeScript, hooks e módulos        | Manifestos, tipagem/lint aprovados, hooks com estado/listeners; sem `any` no código próprio       | Validar comportamento visual dos hooks e estados no app                          |
+| Cadastro/login por senha e perfis            | Senha incorreta recusada; perfis protegidos; login, restauração e logout Android aprovados        | Cadastro com foto e demais campos pela interface                                 |
+| Conversa individual única para dois usuários | Criação simultânea retornou o mesmo ID; conversa consigo mesmo recusada                           | Fluxo visual e navegação ao perfil                                               |
+| Grupos, proprietário, capacidade e políticas | Concorrência respeitou última vaga; não proprietário e redução abaixo da ocupação recusados       | Criação/edição e indicadores pela interface                                      |
+| Mensagens no RTDB e direcionamento           | Persistência protegida; histórico coletivo; listener Android mostrou mensagens reais              | Dois clientes simultâneos, rolagem e todos os estados visuais                    |
+| Revogação de integrantes                     | Removido sem leitura/envio/push; grupo desapareceu da lista Android                               | Confirmar limpeza da interface ao remover usuário com chat aberto                |
+| Fotos em armazenamento e URLs no Firestore   | Upload Cloudinary real; implementação grava URLs; nenhuma imagem Base64 nos bancos                | Galeria, permissões e alteração das fotos pela interface                         |
+| API própria pública HTTPS                    | Health, Firestore e rotas autenticadas testados                                                   | Retomada do serviço Free após inatividade                                        |
+| Destinatários e deduplicação de push         | FCM real Android; quantidades das quatro políticas, deduplicação, remetente e removido conferidos | Ampliar evidências de recebimento por política e diferentes clientes             |
+| Android e iOS                                | Android com sessão/histórico/FCM reais; iOS compilado, instalado e tela de login aberta           | Cold start standalone e fluxos completos Android; fluxos completos e APNs no iOS |
+| Toque na notificação abre conversa           | Toque em foreground Android abriu o grupo e mostrou histórico real                                | Navegação em background e APK com processo encerrado                             |
+| Segurança dos bancos e segredos              | Regras publicadas e acessos negados em produção; configurações cliente públicas versionadas       | Manter segredos somente na hospedagem; revisar avisos transitivos documentados   |
+| README, URL, prints e evidência de push      | URL e configuração reais, instruções, prints e recebimento Android documentados                   | Demais prints dos fluxos e evidência iOS                                         |
+| Integrantes e entrega                        | Repositório público e cinco nomes/RMs registrados no README                                       | Links já entregues pelo Teams; concluir validação técnica                        |
 
 Os cinco integrantes e seus RMs foram informados pelo usuário e incluídos no README. A equipe informou não ter acesso a Apple Developer/APNs. Por isso, o recebimento de push iOS continua pendente; não contratar associação para contornar a restrição de custo zero.
 

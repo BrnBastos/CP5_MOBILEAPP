@@ -8,7 +8,7 @@ Aplicativo React Native de conversas individuais e em grupo com API própria e i
 
 O código das telas, serviços, API e regras está implementado. A API está publicada em **https://cp5-chat-api-mhx2.onrender.com**, conectada ao projeto Firebase real `cp5-mobileapp`. Em 5 de outubro de 2026, 49 verificações autenticadas na API real passaram; upload e leitura de uma imagem no Cloudinary também foram confirmados. As contas, os dados e a imagem temporários foram removidos após os testes.
 
-`firebaseConfig.json`, `google-services.json` e `GoogleService-Info.plist` contêm configurações públicas reais do mesmo projeto. As regras dos dois bancos foram publicadas. TypeScript, lint, testes locais, Expo Doctor e exportação Android/iOS/web passaram. O build Android nativo compilou e foi instalado no emulador Google Play (Android 16), onde login, restauração da sessão, leitura de mensagens, recebimento FCM e abertura do grupo por toque foram comprovados. **Ainda faltam fluxos completos de interface, cold start de APK standalone e validação iOS.** Há prints reais da execução Android. [Auditoria dos requisitos](docs/verificacao-requisitos.md).
+`firebaseConfig.json`, `google-services.json` e `GoogleService-Info.plist` contêm configurações públicas reais do mesmo projeto. As regras dos dois bancos foram publicadas. TypeScript, lint, testes locais, Expo Doctor e exportação Android/iOS/web passaram. O build Android nativo compilou e foi instalado no emulador Google Play (Android 16), onde login, restauração da sessão, leitura de mensagens, recebimento FCM e abertura do grupo por toque foram comprovados. **Ainda faltam fluxos completos de interface, cold start de APK standalone e fluxos completos/push iOS.** O iOS também compilou e abriu a tela de login no simulador iPhone Air (iOS 26.4). Há prints reais das duas plataformas. [Auditoria dos requisitos](docs/verificacao-requisitos.md).
 
 ## Custo zero
 
@@ -117,7 +117,7 @@ Utilizar Cloudinary Image and Video APIs Free. Configurar `CLOUDINARY_CLOUD_NAME
 
 Mensagens direcionadas permanecem no histórico coletivo. O payload inclui `conversationId`, `conversationType` e `messageId`; o texto é genérico. Ao tocar, a rota protegida abre a conversa e os bancos revalidam acesso.
 
-Android: configurar FCM e a permissão de notificações; canal `messages`. iOS: fornecer configuração Firebase, credencial APNs, capability de push e assinatura válida. Gerar build nativo com `npx expo run:android` ou `npx expo run:ios` somente após essas configurações. Builds locais não dependem de contratação EAS.
+Android: configurar FCM e a permissão de notificações; canal `messages`. iOS: fornecer configuração Firebase, credencial APNs, capability de push e assinatura válida. Gerar build nativo com `npx expo run:android` ou `npx expo run:ios` somente após essas configurações. Builds locais não dependem de contratação EAS. No iOS, o plugin Firebase utiliza `ios.disableSPM: true` para instalar Firebase pelo CocoaPods, compatível com `useFrameworks: static`. Ao atualizar essa configuração em um checkout que já possui a pasta `ios`, executar `npx expo prebuild --platform ios --no-install` antes de `npm run ios`.
 
 A API mantém uma reserva transacional por mensagem para evitar envios repetidos em chamadas concorrentes. Tokens inválidos são desativados. Falhas ambíguas do FCM não são repetidas automaticamente: isso evita duplicação, mas pode deixar um push sem entrega confirmada. Não há promessa de entrega externa exatamente uma vez.
 
@@ -137,7 +137,7 @@ npm run test:integration
 
 Esse comando inicia emuladores em um projeto `demo-cp5`, cria contas autenticadas temporárias e verifica capacidade concorrente, conversa individual sem duplicação, persistência, deduplicação de chamadas de push, privacidade e revogação. Sem emuladores, `npm run check` omite o teste integrado explicitamente; ele não equivale ao comando acima. A política desativada permite testar deduplicação sem simular entrega FCM.
 
-Resultado integrado em emuladores: 4 testes passaram. Na auditoria de produção, 49 verificações passaram, incluindo capacidade concorrente, privacidade, persistência, deduplicação e revogação de acesso. Uma imagem foi enviada e lida no Cloudinary real, depois excluída. O recebimento FCM Android e o toque em foreground foram comprovados no emulador Google Play; iOS e cold start de APK standalone continuam pendentes. [Resultados e limites da auditoria](docs/verificacao-requisitos.md).
+Resultado integrado em emuladores: 4 testes passaram. Na auditoria de produção, 49 verificações passaram, incluindo capacidade concorrente, privacidade, persistência, deduplicação e revogação de acesso. Uma imagem foi enviada e lida no Cloudinary real, depois excluída. O recebimento FCM Android e o toque em foreground foram comprovados no emulador Google Play; Fluxos completos/push iOS e cold start de APK standalone continuam pendentes. [Resultados e limites da auditoria](docs/verificacao-requisitos.md).
 
 A revisão de dependências atualizou o gRPC utilizado pelo SDK Firebase para a versão corrigida 1.13.6. Permanecem avisos transitivos do ecossistema Expo, incluindo dependências sem correção publicada. Não foi aplicado `audit fix --force`, pois suas propostas incluem mudanças incompatíveis. [Revisão e limitações](docs/seguranca-dependencias.md).
 
@@ -158,9 +158,11 @@ scripts/             Configuração e execução de testes
 
 ## Evidências e entrega
 
+Evidência iOS: [tela de login no simulador](docs/evidencias/ios-login.png).
+
 Evidências Android: [login após logout](docs/evidencias/android-login-apos-logout.png), [push em foreground](docs/evidencias/android-push-foreground.png), [grupo aberto pelo toque](docs/evidencias/android-chat-apos-toque.png) e [notificações em background](docs/evidencias/android-push-background.png). São contas temporárias reais de auditoria, removidas após os testes.
 
-Pendentes: demais prints dos fluxos, execução/push iOS, cold start de APK standalone, cadastro/fotos pela interface e API após inatividade. A entrega pelo Teams será composta pelo link do repositório e URL da API publicada. O trabalho ainda não está pronto para entrega.
+Pendentes: demais prints dos fluxos, fluxos completos/push iOS, cold start de APK standalone, cadastro/fotos pela interface e API após inatividade. O usuário confirmou que o link do repositório e a URL da API já foram entregues pelo Teams. A validação técnica ainda contém as pendências descritas acima.
 
 ## Integrantes
 

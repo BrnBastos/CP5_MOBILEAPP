@@ -4,6 +4,13 @@ import type { ConfigContext, ExpoConfig } from 'expo/config';
 export default function configure({ config }: ConfigContext): ExpoConfig {
   const android = existsSync('./google-services.json');
   const ios = existsSync('./GoogleService-Info.plist');
+  const firebasePlugins: NonNullable<ExpoConfig['plugins']> =
+    android || ios
+      ? [
+          ['@react-native-firebase/app', { ios: { disableSPM: true } }],
+          '@react-native-firebase/messaging',
+        ]
+      : [];
   const basePlugins = (config.plugins ?? []).filter((plugin) => {
     const name = typeof plugin === 'string' ? plugin : plugin[0];
     return ![
@@ -24,7 +31,7 @@ export default function configure({ config }: ConfigContext): ExpoConfig {
       ],
       'expo-notifications',
       ['expo-build-properties', { ios: { useFrameworks: 'static' } }],
-      ...(android || ios ? ['@react-native-firebase/app', '@react-native-firebase/messaging'] : []),
+      ...firebasePlugins,
     ],
     android: {
       ...config.android,
